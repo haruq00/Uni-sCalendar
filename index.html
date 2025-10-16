@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>課題管理カレンダー＆時間割</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="main-container">
+  <!-- サイドバー -->
+  <div class="sidebar">
+    <h2>メニュー</h2>
+    <button class="tab-btn active" data-tab="calendar-tab">カレンダー</button>
+    <button class="tab-btn" data-tab="timetable-tab">時間割</button>
+  </div>
+
+  <!-- コンテンツ -->
+  <div class="content">
+    <!-- カレンダータブ -->
+    <div id="calendar-tab" class="tab-content">
+      <div class="calendar-container">
+        <header id="header">
+          <h1>課題カレンダー</h1>
+          <div class="month-display">
+            <button id="prev-month">◀</button>
+            <span id="month-year"></span>
+            <button id="next-month">▶</button>
+            <select id="year-select"></select>
+            <select id="month-select"></select>
+          </div>
+        </header>
+        <div class="weekdays">
+          <div class="sunday">日</div><div>月</div><div>火</div><div>水</div>
+          <div>木</div><div>金</div><div class="saturday">土</div>
+        </div>
+        <div id="calendar"></div>
+      </div>
+      <button class="add-task-btn" id="open-modal-fixed">＋</button>
+    </div>
+
+    <!-- 時間割タブ -->
+    <div id="timetable-tab" class="tab-content" style="display:none;">
+      <h2>時間割</h2>
+      <div id="timetable">
+        <table>
+          <thead>
+            <tr>
+              <th>時間</th>
+              <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th>
+            </tr>
+          </thead>
+          <tbody id="timetable-body"></tbody>
+        </table>
+      </div>
+      <button class="add-class-btn" id="add-class-btn">＋</button>
+    </div>
+  </div>
+</div>
+
+<!-- 課題追加モーダル -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h2>課題を追加</h2>
+    <input type="text" id="subject" placeholder="科目名">
+    <input type="text" id="title" placeholder="内容">
+    <input type="datetime-local" id="deadline">
+    <div class="modal-buttons">
+      <button id="cancel-btn">キャンセル</button>
+      <button id="add-btn">追加</button>
+    </div>
+  </div>
+</div>
+
+<!-- 時間割授業追加モーダル -->
+<div id="class-modal" class="modal">
+  <div class="modal-content">
+    <h2>授業を追加</h2>
+    <input type="text" id="class-name" placeholder="授業名">
+    <input type="text" id="class-room" placeholder="教室">
+    <select id="class-day">
+      <option value="1">月</option><option value="2">火</option>
+      <option value="3">水</option><option value="4">木</option><option value="5">金</option>
+    </select>
+    <select id="class-time">
+      <option value="1">1限</option><option value="2">2限</option>
+      <option value="3">3限</option><option value="4">4限</option>
+      <option value="5">5限</option><option value="6">6限</option>
+    </select>
+    <div class="modal-buttons">
+      <button id="cancel-class-btn">キャンセル</button>
+      <button id="add-class-confirm-btn">追加</button>
+    </div>
+  </div>
+</div>
+
+<!-- 時間割詳細モーダル -->
+<div id="class-detail-modal" class="modal">
+  <div class="modal-content">
+    <h2>授業詳細</h2>
+    <div>
+      <label>授業名: <input type="text" id="detail-class-name"></label>
+    </div>
+    <div>
+      <label>教室: <input type="text" id="detail-class-room"></label>
+    </div>
+    <div>
+      出席: <span id="detail-attendance">0</span>
+      <button id="detail-attendance-btn">＋</button>
+      <button id="detail-attendance-cancel-btn">ー</button>
+    </div>
+    <div>
+      欠席: <span id="detail-absence">0</span>
+      <button id="detail-absence-btn">＋</button>
+      <button id="detail-absence-cancel-btn">ー</button>
+    </div>
+    <div class="modal-buttons">
+      <button id="delete-class-btn" style="background:#ff4d4f">削除</button>
+      <button id="update-class-btn">更新</button>
+      <button id="close-class-detail-btn">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- カレンダー詳細モーダル -->
+<div id="calendar-detail-modal" class="modal">
+  <div class="modal-content">
+    <h2 id="calendar-detail-date">日付詳細</h2>
+    <div id="calendar-task-list" style="max-height:300px; overflow-y:auto;"></div>
+    <div>
+      <h3>新規タスク追加</h3>
+      <input type="text" id="detail-task-subject" placeholder="科目名">
+      <input type="text" id="detail-task-title" placeholder="内容">
+      <input type="datetime-local" id="detail-task-deadline">
+      <div class="modal-buttons">
+        <button id="add-detail-task-btn">追加</button>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button id="close-calendar-detail-btn">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
